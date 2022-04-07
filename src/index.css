@@ -7,7 +7,305 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif !important;
+  text-transform: lowercase !important;
+}
+
+.MuiSwitch-track {
+  background: white !important;
+}
+
+.Mui-checked + .MuiSwitch-track {
+  background: #1976d2 !important;
+}
+
+.MuiSelect-select {
+  color: white !important;
+}
+.MuiInput-root::before {
+  border-color: white !important;
+}
+
+.MuiSvgIcon-root {
+  fill: white !important;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.root {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.controls {
+  width: 400px;
+  padding: 50px 24px 50px 0;
+  background: black;
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.controls-nav {
+  display: flex;
+}
+
+.controls-phasetitle {
+  font-weight: lighter;
+  font-style: italic;
+  letter-spacing: 4px;
+  margin: 0;
+  font-size: 24px;
+}
+
+.controls-navbutton {
+  flex-grow: 1;
+}
+
+.controls-phasecontrols {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 16px 0;
+}
+
+.phasecontrols-section {
+  color: white;
+  font-weight: normal;
+  letter-spacing: 4px;
+  margin-bottom: 4px;
+}
+.phasecontrols-section:first-child {
+  margin-top: 0;
+}
+
+.phasecontrols-control {
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: flex-start;
+}
+
+
+.visualizer {
+  width: 100%;
+}
+
+.cyan {
+  background-color: cyan;
+  --y: 0.86602540378px;
+  --x: -0.5px;
+  --spread: calc(var(--cyanFrequency) * var(--spreadMult));
+}
+
+.magenta {
+  background-color: magenta;
+  --y: -0.86602540378px;
+  --x: -0.5px;
+  --spread: calc(var(--magentaFrequency) * var(--spreadMult));
+}
+
+.yellow {
+  background-color: yellow;
+  --y: 0px;
+  --x: 1px;
+  --spread: calc(var(--yellowFrequency) * var(--spreadMult));
+}
+
+.cyan,.magenta,.yellow {
+  --translate: calc(var(--x) * var(--spread)), calc(var(--y) * var(--spread));
+  --scale: calc(1 + (var(--spread)/200));
+  transform: translate(var(--translate)) scale(var(--scale), var(--scale));
+  mix-blend-mode: multiply;
+}
+
+.screen {
+  mix-blend-mode: screen;
+
+}
+
+.cyan.screen {
+  background-color: blue;
+}
+
+.magenta.screen {
+  background-color: red;
+}
+
+.yellow.screen {
+  background-color: lime;
+}
+
+.borderVisualizer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: black;
+  overflow: hidden;
+  height: 100%;
+}
+
+.borderVisualizer-container {
+  display: flex;
+  width: calc(100vw - 450px);
+  height: calc(100vh - 100px);
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.borderVisualizer-shake {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  --spreadMult: 0.05;
+}
+
+.spectrumVisualizer-spectrum {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+}
+
+.spectrumVisualizer-bar {
+  height: calc(var(--frequency) * 1px);
+  width: 100%;
+  position: relative;
+}
+
+.spectrumVisualizer-barColor {
+  height: 100%;
+  width: 100%;
+  --spreadMult: 0.1;
+  position: absolute;
+}
+
+.spectrumVisualizer {
+  width: calc(1000px - (var(--widthFrequency) * 2px));
+  height: calc(600px - (var(--heightFrequency) * 1px));
+  margin: auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spectrumVisualizer-shake {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  --spreadMult: 0.1;
+}
+
+.spectrumVisualizer-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: black;
+}
+
+.circleVisualizer {
+  position: relative;
+  mix-blend-mode: multiply;
+}
+.circleVisualizer .circle {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  --baseHeight: calc((150px + (var(--radiusFrequency) * 1.5px)));
+  height: var(--baseHeight);
+  position: absolute;
+  transform: translate(-50%,-50%);
+  mix-blend-mode: multiply;
+}
+
+.circleVisualizer.circle:not(:first-child) {
+  --left: calc(var(--spreadFrequency) * var(--spreadMult) * 1px);
+  --normalizedSpread: calc(var(--spreadFrequency) * var(--spreadMult) / 200);
+  height: calc(var(--baseHeight) * (1 - var(--normalizedSpread)));
+  left: var(--left);
+}
+
+.mirror .circleVisualizer.circle:not(:first-child) {
+  left: calc(var(--left) * -1);
+}
+
+.circleVisualizer.circle:nth-child(2) {
+  --spreadMult: 0.6;
+}
+.circleVisualizer.circle:nth-child(3) {
+  --spreadMult: 1.1;
+}
+.circleVisualizer.circle:nth-child(4) {
+  --spreadMult: 1.5;
+}
+
+.textVisualizer {
+  position: absolute;
+  mix-blend-mode: multiply;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  align-items: center;
+  height: 400px;
+  width: 350px;
+  bottom: -100px;
+}
+
+.textVisualizer-letters {
+  mix-blend-mode: multiply;
+  position: absolute;
+  left: var(--scroll);
+  display: flex;
+  flex-direction: row;
+}
+
+.textVisualizer .letter {
+  font-size: 24px;
+  color: transparent;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 0;
+}
+
+
+.textVisualizer .letter-color {
+  margin-top: calc(var(--sin) * var(--waveFrequency) * 0.25px);
+  mix-blend-mode: multiply;
+  position: relative;
+  --spreadMult: 0.1;
+  display: flex;
+  justify-content: center;
+}
+
+.textVisualizer .shake {
+  background-color: transparent;
+  position: absolute;
+  font-style: italic;
+}
+
+.textVisualizer .letter .cyan {
+  color: cyan;
+}
+
+.textVisualizer .letter .magenta {
+  color: magenta;
+}
+
+.textVisualizer .letter .yellow {
+  color: yellow;
 }
